@@ -32,6 +32,26 @@ model Teachers {
   id      String    @id @default(uuid())
   name    String    @unique
   Courses Courses[]
+  Books   Books[]
 
   @@map("teachers")
+}
+
+model Authors {
+  id    String  @id @default(uuid())
+  name  String  @unique
+  Books Books[]
+
+  @@map("authors")
+}
+
+model Books {
+  id            String   @id @default(uuid())
+  name          String   @unique
+  author_id     String
+  fk_id_teacher String
+  author        Authors  @relation(fields: [author_id], references: [id])
+  teacher       Teachers @relation(fields: [fk_id_teacher], references: [id])
+
+  @@map("books")
 }
